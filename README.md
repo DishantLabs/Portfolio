@@ -1,7 +1,9 @@
 <h1>Hi, I'm Dishant! <br/><a>Data Scientist,</a><a> Lifelong Learner</a></h1>
 
-<h2>👨‍💻 Data Science & Analytics Projects:</h2>
+<h2>👨‍💻 Environmental Data Science & Analytics Projects:</h2>
 
+- <b>ML based Storm Mode Prediction (Python, Google Colab)</b>
+  - [Decision Tree Classifier for Storm Mode Prediction](https://github.com/dishantsharma14/Panama-Canal-Model/tree/main)
 - <b>Panama Canal Water Level Prediction (Python, Jupyter Notebook, Excel)</b>
   - [Multiple Regression Model to predict future water levels for shipping business efficiency](https://github.com/dishantsharma14/Panama-Canal-Model/tree/main)
 - <b>Site Selection Model for Commercial Development in Duluth, Minnesota (ArcGIS Pro, Python, SQL)</b>
