@@ -1,4 +1,4 @@
-<h1>Hi, I'm Dishant! <br/><a>Geospatial Data Scientist,</a></h1>
+<h1>Hi, I'm Dishant! <br/><a>Geospatial Data Scientist</a></h1>
 
 <h2>👨‍💻 Data Science & Analytics Projects:</h2>
 
