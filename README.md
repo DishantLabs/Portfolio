@@ -1,6 +1,6 @@
-<h1>Hi, I'm Dishant! <br/><a>Environmental Data Scientist,</a><a> Lifelong Learner</a></h1>
+<h1>Hi, I'm Dishant! <br/><a>Geospatial Data Scientist,</a></h1>
 
-<h2>👨‍💻 Environmental Data Science & Analytics Projects:</h2>
+<h2>👨‍💻 Data Science & Analytics Projects:</h2>
 
 - <b>Machine Learning for Storm Mode Prediction (Python, Google Colab)</b>
   - [Decision Tree Classifier for Storm Mode Prediction based on key storm morphology variables](https://github.com/dishantsharma14/StormModePrediction/blob/main/Storm_mode_prediction.ipynb)
