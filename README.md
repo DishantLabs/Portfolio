@@ -4,13 +4,13 @@
 
 - <b>Machine Learning for Storm Mode Prediction (Python, Google Colab)</b>
   - [Decision Tree Classifier for Storm Mode Prediction based on key storm morphology variables](https://github.com/dishantsharma14/StormModePrediction/blob/main/Storm_mode_prediction.ipynb)
-- <b>Panama Canal Water Level Prediction (Python, Jupyter Notebook, Excel)</b>
+- <b>Panama Canal Water Level Prediction (Python, Excel)</b>
   - [Multiple Regression Model to predict future water levels for shipping business efficiency](https://github.com/dishantsharma14/Panama-Canal-Model/tree/main)
 - <b>Site Selection Model for Commercial Development in Duluth, Minnesota (ArcGIS Pro, Python, SQL)</b>
   - [Finding suitable locations in the city using cost surfaces](https://github.com/dishantsharma14/SuitabilityAnalysis)
 - <b>Computer Vision for Environmental Change Detection in Chile (Erdas Imagine, Excel)</b>
   - [Using Random Forest ML to estimate Glacier Area Loss based on satellite images](https://github.com/dishantsharma14/ComputerVision)
-- <b> Exploratory Data Analysis and Time Series Analysis of Climate Change (Python, Jupyter Notebook/Lab)</b>
+- <b> Exploratory Data Analysis and Time Series Analysis of Climate Change (Python)</b>
   - [Exploring trends and spatial patterns of temperature and precipitation in Rapel region (1950-2025)](https://github.com/dishantsharma14/ClimateTrends/blob/main/README.md)
 
 
