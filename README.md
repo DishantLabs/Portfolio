@@ -2,17 +2,17 @@
 
 <h2>👨‍💻 Data Science & Analytics Projects:</h2>
 - <b>Improving Snow Cover Classification in Cloudy Mountain Regions Using Machine Learning (Python, ArcGIS Pro, Google Colab)</b>
-  - [Random Forest Supervised ML algorithm to classify Snow, Cloud and Other Land Cover Classes](https://github.com/DishantLabs/EAE_DataScienceProject)
+  - [Random Forest Supervised ML algorithm to classify Snow, Cloud and Other Land Cover Classes] (https://github.com/DishantLabs/EAE_DataScienceProject)
 - <b>Machine Learning for Storm Mode Prediction (Python, Google Colab)</b>
-  - [Decision Tree Classifier for Storm Mode Prediction based on key storm morphology variables](https://github.com/dishantsharma14/StormModePrediction/blob/main/Storm_mode_prediction.ipynb)
+  - [Decision Tree Classifier for Storm Mode Prediction based on key storm morphology variables](https://github.com/DishantLabs/StormModePrediction/blob/main/Storm_mode_prediction.ipynb)
 - <b>Panama Canal Water Level Prediction (Python, Excel)</b>
-  - [Multiple Regression Model to predict future water levels for shipping business efficiency](https://github.com/dishantsharma14/Panama-Canal-Model/tree/main)
+  - [Multiple Regression Model to predict future water levels for shipping business efficiency](https://github.com/DishantLabs/Panama-Canal-Model/tree/main)
 - <b>Site Selection Model for Commercial Development in Duluth, Minnesota (ArcGIS Pro, Python, SQL)</b>
-  - [Finding suitable locations in the city using cost surfaces](https://github.com/dishantsharma14/SuitabilityAnalysis)
+  - [Finding suitable locations in the city using cost surfaces](https://github.com/DishantLabs/SuitabilityAnalysis)
 - <b>Computer Vision for Environmental Change Detection in Chile (Erdas Imagine, Excel)</b>
-  - [Using Random Forest ML to estimate Glacier Area Loss based on satellite images](https://github.com/dishantsharma14/ComputerVision)
+  - [Using Random Forest ML to estimate Glacier Area Loss based on satellite images](https://github.com/DishantLabs/ComputerVision)
 - <b> Exploratory Data Analysis and Time Series Analysis of Climate Change (Python)</b>
-  - [Exploring trends and spatial patterns of temperature and precipitation in Rapel region (1950-2025)](https://github.com/dishantsharma14/ClimateTrends/blob/main/README.md)
+  - [Exploring trends and spatial patterns of temperature and precipitation in Rapel region (1950-2025)](https://github.com/DishantLabs/ClimateTrends/blob/main/README.md)
 
 
 <h2>🗣️ Science Communication & Data Visualization  📊 </h2>
