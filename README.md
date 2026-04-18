@@ -2,6 +2,8 @@
 
 <h2>👨‍💻 Data Science & Analytics Projects:</h2>
 
+- <b>Improving Snow Cover Classification in Cloudy Mountain Regions Using Machine Learning (Python, ArcGIS Pro, Google Colab)</b>
+  - [Random Forest Supervised ML Algorithm for Three Class Problem](https://github.com/DishantLabs/EAE_DataScienceProject)
 - <b>Machine Learning for Storm Mode Prediction (Python, Google Colab)</b>
   - [Decision Tree Classifier for Storm Mode Prediction based on key storm morphology variables](https://github.com/DishantLabs/StormModePrediction/blob/main/Storm_mode_prediction.ipynb)
 - <b>Panama Canal Water Level Prediction (Python, Excel)</b>
