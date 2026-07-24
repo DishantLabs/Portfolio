@@ -2,7 +2,7 @@
 
 <h2>👨‍💻 Data Science & Analytics Projects:</h2>
 
-- <b>Live Wildfires, USA (TypeScript, REACT, Leaflet, NASA EONET Data)</b>
+- <b>Live Wildfires, USA (Sandbox, TypeScript, REACT, Leaflet, NASA EONET Data)</b>
   - [Click for the WebMap](https://42lmjt.csb.app/)
 - <b>Improving Satellite Imagery Derived Snow Cover Classification Using Machine Learning (Python, ArcGIS Pro, Google Colab)</b>
   - [Random Forest Supervised ML Algorithm for Three Class Problem](https://github.com/DishantLabs/EAE_DataScienceProject)
