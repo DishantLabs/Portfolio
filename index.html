@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dishant — Geospatial Data Scientist & Engineer</title>
+<meta name="description" content="Geospatial data science and engineering: remote sensing, deep learning, and environmental analytics.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --deep:      #0C1A22;   /* deep water / base */
+    --panel:     #122630;   /* raised panel */
+    --panel-2:   #16303B;   /* hover panel */
+    --line:      #1E3A45;   /* contour / hairline */
+    --line-soft: #17303A;
+    --ink:       #EAF1ED;   /* primary text */
+    --muted:     #8FA9A6;   /* secondary text */
+    --faint:     #5E7B79;   /* labels */
+    --cyan:      #6FD3C7;   /* glacial accent */
+    --gold:      #E4B363;   /* peak accent */
+    --sage:      #9BB89B;   /* mid elevation */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::selection { background: var(--cyan); color: var(--deep); }
+
+  .mono {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  #contours {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.55;
+  }
+
+  #contours path { fill: none; stroke: var(--line); stroke-width: 1; }
+
+  .hero-veil {
+    position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(120% 90% at 20% 30%, rgba(12,26,34,0) 0%, rgba(12,26,34,0.65) 70%, var(--deep) 100%);
+    pointer-events: none;
+  }
+
+  /* corner graticule ticks */
+  .graticule { position: absolute; z-index: 2; color: var(--faint); }
+  .graticule.tl { top: 26px; left: 32px; }
+  .graticule.tr { top: 26px; right: 32px; text-align: right; }
+  .graticule.br { bottom: 24px; right: 32px; text-align: right; }
+
+  .hero-inner { position: relative; z-index: 3; width: 100%; }
+
+  .eyebrow-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 22px;
+  }
+  .ramp {
+    display: inline-flex; height: 8px; width: 88px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--sage) 55%, var(--gold));
+  }
+
+  .hero h1 {
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: clamp(2.9rem, 8vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--cyan);
+  }
+
+  .role {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(0.8rem, 1.6vw, 1rem);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 26px;
+  }
+
+  .lede {
+    max-width: 52ch;
+    color: var(--muted);
+    font-size: 1.08rem;
+    margin-top: 22px;
+  }
+
+  .hero-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem; letter-spacing: 0.05em;
+    padding: 11px 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink);
+    transition: border-color .25s ease, background .25s ease, transform .25s ease;
+  }
+  .btn:hover { border-color: var(--cyan); background: var(--panel); transform: translateY(-2px); }
+  .btn.primary { background: var(--cyan); color: var(--deep); border-color: var(--cyan); font-weight: 500; }
+  .btn.primary:hover { background: #85e0d4; }
+  .btn svg { width: 16px; height: 16px; }
+
+  .scroll-hint {
+    position: absolute; bottom: 24px; left: 32px; z-index: 3;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .scroll-hint svg { width: 15px; height: 15px; color: var(--cyan); animation: bob 2s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+  /* ---------- Section frame ---------- */
+  section.block { padding: 96px 0; border-bottom: 1px solid var(--line-soft); position: relative; }
+
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 44px; }
+  .section-head .tick {
+    height: 10px; width: 10px; border-radius: 2px; flex: none;
+    background: var(--cyan); transform: translateY(1px);
+  }
+  .section-head h2 {
+    font-family: "Fraunces", serif; font-weight: 500;
+    font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.01em;
+  }
+  .section-head .count { margin-left: auto; }
+
+  /* ---------- Project grid ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+  .card {
+    position: relative;
+    display: flex; flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    padding: 26px;
+    transition: transform .3s cubic-bezier(.2,.7,.3,1), border-color .3s ease, background .3s ease;
+    overflow: hidden;
+  }
+  .card::after {
+    content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 3px;
+    background: linear-gradient(180deg, var(--cyan), var(--gold));
+    transform: scaleY(0); transform-origin: top; transition: transform .35s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--line); background: var(--panel-2); }
+  .card:hover::after { transform: scaleY(1); }
+
+  .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .icon-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px; border-radius: 11px;
+    background: rgba(111,211,199,0.09);
+    border: 1px solid var(--line);
+    color: var(--cyan);
+  }
+  .icon-badge svg { width: 22px; height: 22px; stroke-width: 1.6; }
+  .card-arrow { color: var(--faint); transition: color .25s ease, transform .25s ease; }
+  .card-arrow svg { width: 18px; height: 18px; }
+  .card:hover .card-arrow { color: var(--cyan); transform: translate(2px,-2px); }
+
+  .card h3 {
+    font-family: "Fraunces", serif; font-weight: 500; font-size: 1.22rem;
+    line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px;
+  }
+  .card p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+  .tag {
+    font-family: "JetBrains Mono", monospace; font-size: 0.66rem;
+    letter-spacing: 0.06em; color: var(--sage);
+    padding: 4px 9px; border: 1px solid var(--line-soft); border-radius: 6px;
+    background: rgba(155,184,155,0.05);
+  }
+
+  /* ---------- Simple link rows (comms + pubs) ---------- */
+  .rows { display: flex; flex-direction: column; gap: 2px; }
+  .row {
+    display: flex; align-items: center; gap: 18px;
+    padding: 20px 8px;
+    border-top: 1px solid var(--line-soft);
+    transition: background .25s ease, padding-left .25s ease;
+  }
+  .row:last-child { border-bottom: 1px solid var(--line-soft); }
+  .row:hover { background: var(--panel); padding-left: 16px; }
+  .row .r-icon { color: var(--gold); flex: none; }
+  .row .r-icon svg { width: 20px; height: 20px; stroke-width: 1.6; }
+  .row .r-body { flex: 1; }
+  .row .r-body h4 { font-weight: 500; font-size: 1.02rem; margin-bottom: 2px; }
+  .row .r-body span { color: var(--faint); font-size: 0.82rem; font-family: "JetBrains Mono", monospace; letter-spacing: 0.04em; }
+  .row .r-go { color: var(--faint); transition: color .25s ease, transform .25s ease; flex: none; }
+  .row .r-go svg { width: 17px; height: 17px; }
+  .row:hover .r-go { color: var(--cyan); transform: translateX(3px); }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 72px 0 60px; }
+  .foot-grid { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  footer h3 {
+    font-family: "Fraunces", serif; font-weight: 500; font-size: 2rem; letter-spacing: -0.01em;
+  }
+  footer h3 em { font-style: italic; color: var(--cyan); }
+  .foot-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .foot-note { margin-top: 40px; color: var(--faint); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .wrap { padding: 0 22px; }
+    .grid { grid-template-columns: 1fr; }
+    .graticule.tr, .graticule.tl { display: none; }
+    section.block { padding: 72px 0; }
+    .scroll-hint { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+    #contours path { stroke-dashoffset: 0 !important; }
+  }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <svg id="contours" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 800" aria-hidden="true"></svg>
+  <div class="hero-veil"></div>
+
+  <div class="graticule tl mono">42°30′N<br>088°15′W</div>
+  <div class="graticule tr mono">GEOSPATIAL<br>DATA · SCIENCE</div>
+  <div class="graticule br mono">ELEV 0 — 6800 m</div>
+
+  <div class="wrap hero-inner">
+    <div class="eyebrow-row">
+      <span class="ramp"></span>
+      <span class="mono">Portfolio · Field &amp; Model</span>
+    </div>
+
+    <h1>Hi, I'm Dishant — I map the <em>Earth</em> with data.</h1>
+
+    <div class="role">Geospatial Data Scientist &amp; Engineer</div>
+
+    <p class="lede">
+      I turn satellite imagery and environmental data into decisions — from deep-learning
+      building footprints and snow-cover classification to glacier change, flood risk, and
+      live wildfire mapping.
+    </p>
+
+    <div class="hero-links">
+      <a class="btn primary" href="#work"><span data-lucide="layers"></span> View work</a>
+      <a class="btn" href="https://github.com/DishantLabs" target="_blank" rel="noopener"><span data-lucide="github"></span> GitHub</a>
+      <!-- Replace href below with your LinkedIn / email, then delete this comment -->
+      <a class="btn" href="#contact"><span data-lucide="mail"></span> Get in touch</a>
+    </div>
+  </div>
+
+  <a class="scroll-hint mono" href="#work"><span data-lucide="arrow-down"></span> Scroll</a>
+</header>
+
+<!-- ===================== SELECTED WORK ===================== -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tick"></span>
+      <h2>Selected work</h2>
+      <span class="mono count">08 projects</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card reveal" href="https://github.com/indiana-gio/building-extraction" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="building-2"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Deep Learning for Building Footprint Extraction</h3>
+        <p>A PyTorch segmentation pipeline extracting building footprints from imagery across Indiana. Open-source, production-oriented.</p>
+        <div class="tags"><span class="tag">PyTorch</span><span class="tag">Deep Learning</span><span class="tag">Segmentation</span></div>
+      </a>
+
+      <a class="card reveal" href="https://42lmjt.csb.app/" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="flame"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Live Wildfires, USA</h3>
+        <p>An interactive web map streaming near-real-time wildfire events from NASA EONET, built as a responsive front-end sandbox.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Leaflet</span><span class="tag">NASA EONET</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/EAE_DataScienceProject" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="snowflake"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Snow Cover Classification from Satellite Imagery</h3>
+        <p>A supervised Random Forest workflow classifying snow, cloud, and other surfaces — improving snow-cover mapping from Landsat.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Random Forest</span><span class="tag">ArcGIS Pro</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/StormModePrediction/blob/main/Storm_mode_prediction.ipynb" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="cloud-lightning"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Machine Learning for Storm Mode Prediction</h3>
+        <p>A decision-tree classifier predicting storm mode from key storm-morphology variables, developed in a reproducible notebook.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Decision Tree</span><span class="tag">Colab</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/Panama-Canal-Model/tree/main" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="waves"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Panama Canal Water Level Prediction</h3>
+        <p>A multiple-regression model forecasting canal water levels to support shipping efficiency and operational planning.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Regression</span><span class="tag">Forecasting</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/SuitabilityAnalysis" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="map-pinned"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Site Selection Model — Duluth, MN</h3>
+        <p>A suitability analysis using cost surfaces to locate commercial development sites across the city.</p>
+        <div class="tags"><span class="tag">ArcGIS Pro</span><span class="tag">Python</span><span class="tag">SQL</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/ComputerVision" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="mountain-snow"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Computer Vision for Glacier Change, Chile</h3>
+        <p>A Random Forest classification of satellite imagery estimating multi-year glacier-area loss in the Chilean Andes.</p>
+        <div class="tags"><span class="tag">Erdas Imagine</span><span class="tag">Random Forest</span><span class="tag">Change Detection</span></div>
+      </a>
+
+      <a class="card reveal" href="https://github.com/DishantLabs/ClimateTrends/blob/main/README.md" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon-badge"><span data-lucide="line-chart"></span></span>
+          <span class="card-arrow"><span data-lucide="arrow-up-right"></span></span>
+        </div>
+        <h3>Climate Change EDA &amp; Time Series</h3>
+        <p>Exploratory and time-series analysis of temperature and precipitation trends in the Rapel region, 1950–2025.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">EDA</span><span class="tag">Time Series</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SCIENCE COMMUNICATION ===================== -->
+<section class="block" id="comms">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tick" style="background:var(--gold)"></span>
+      <h2>Science communication &amp; visualization</h2>
+    </div>
+
+    <div class="rows">
+      <a class="row reveal" href="https://niuits-my.sharepoint.com/:i:/g/personal/z1985840_students_niu_edu/IQDmqh1S20h-RYoKD14LuLTpAeyI-5t4VORdJt5ZhDh0dfk?e=3pw5gK" target="_blank" rel="noopener">
+        <span class="r-icon"><span data-lucide="presentation"></span></span>
+        <div class="r-body"><h4>Poster Presentation — AGU 2025, New Orleans</h4><span>Conference · Poster</span></div>
+        <span class="r-go"><span data-lucide="arrow-up-right"></span></span>
+      </a>
+      <a class="row reveal" href="https://storymaps.arcgis.com/stories/ab0f5c9b521b4c989b630d1c0cac979a" target="_blank" rel="noopener">
+        <span class="r-icon"><span data-lucide="map"></span></span>
+        <div class="r-body"><h4>StoryMap — Scientific Fieldwork in Chile</h4><span>ArcGIS StoryMaps</span></div>
+        <span class="r-go"><span data-lucide="arrow-up-right"></span></span>
+      </a>
+      <a class="row reveal" href="https://lnkd.in/gHfwiXmB" target="_blank" rel="noopener">
+        <span class="r-icon"><span data-lucide="globe"></span></span>
+        <div class="r-body"><h4>Interactive Demographic Web Map of Ohio</h4><span>Web Map</span></div>
+        <span class="r-go"><span data-lucide="arrow-up-right"></span></span>
+      </a>
+      <a class="row reveal" href="https://niuits-my.sharepoint.com/:i:/g/personal/z1985840_students_niu_edu/IQDY8aeXoUWwR7M084_Gyi24AeVFOk9fd-_1MlHDjbaDdcA?e=VkpzbR" target="_blank" rel="noopener">
+        <span class="r-icon"><span data-lucide="presentation"></span></span>
+        <div class="r-body"><h4>Poster Presentation — AGU 2024, Washington D.C.</h4><span>Conference · Poster</span></div>
+        <span class="r-go"><span data-lucide="arrow-up-right"></span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PUBLICATIONS ===================== -->
+<section class="block" id="pubs">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tick" style="background:var(--sage)"></span>
+      <h2>Publications</h2>
+    </div>
+
+    <div class="rows">
+      <a class="row reveal" href="https://niuits-my.sharepoint.com/:b:/g/personal/z1985840_students_niu_edu/IQBtKKCAAJ-cQ66KzS5e3Q1FAWBf1FbuH603GoDH6m_lSfM?e=jfB8na" target="_blank" rel="noopener">
+        <span class="r-icon"><span data-lucide="file-text"></span></span>
+        <div class="r-body"><h4>Geospatial Model for Flood and Drought Risk Mapping</h4><span>First-author publication</span></div>
+        <span class="r-go"><span data-lucide="arrow-up-right"></span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid reveal">
+      <h3>Let's map something <em>together.</em></h3>
+      <div class="foot-links">
+        <a class="btn" href="https://github.com/DishantLabs" target="_blank" rel="noopener"><span data-lucide="github"></span> GitHub</a>
+        <!-- Add your real links here -->
+        <a class="btn" href="#"><span data-lucide="linkedin"></span> LinkedIn</a>
+        <a class="btn" href="mailto:you@example.com"><span data-lucide="mail"></span> Email</a>
+      </div>
+    </div>
+    <p class="foot-note mono">© 2026 Dishant · Built with contour lines and clean data.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+  /* ---- render icons ---- */
+  if (window.lucide) lucide.createIcons();
+
+  /* ---- procedural topographic contours ---- */
+  (function drawContours() {
+    const svg = document.getElementById('contours');
+    if (!svg) return;
+    const W = 1200, H = 800;
+    // deterministic pseudo-random so lines are stable
+    let seed = 7;
+    const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+
+    // two "peaks" — clusters of concentric irregular contours
+    const peaks = [
+      { cx: 300, cy: 300, rings: 9, base: 40, step: 46, wob: 26 },
+      { cx: 940, cy: 560, rings: 8, base: 36, step: 52, wob: 30 }
+    ];
+
+    let markup = '';
+    peaks.forEach((p, pi) => {
+      for (let r = 0; r < p.rings; r++) {
+        const radius = p.base + r * p.step;
+        const pts = 60;
+        let d = '';
+        // per-ring phase offsets for organic wobble
+        const ph1 = rand() * 6.28, ph2 = rand() * 6.28;
+        for (let i = 0; i <= pts; i++) {
+          const a = (i / pts) * Math.PI * 2;
+          const wob = Math.sin(a * 3 + ph1) * p.wob * (0.5 + r * 0.06)
+                    + Math.cos(a * 5 + ph2) * (p.wob * 0.4);
+          const rr = radius + wob;
+          const x = p.cx + Math.cos(a) * rr;
+          const y = p.cy + Math.sin(a) * rr * 0.82; // slight flatten
+          d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+        }
+        d += 'Z';
+        // fade outer rings
+        const op = (0.9 - r * 0.07).toFixed(2);
+        markup += `<path d="${d}" style="opacity:${op}" class="cline"></path>`;
+      }
+    });
+    svg.innerHTML = markup;
+
+    // draw-in animation via stroke-dash
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      svg.querySelectorAll('path').forEach((path, i) => {
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+        path.style.transition = `stroke-dashoffset 2.2s ease ${i * 0.06}s`;
+        requestAnimationFrame(() => requestAnimationFrame(() => { path.style.strokeDashoffset = 0; }));
+      });
+    }
+  })();
+
+  /* ---- reveal on scroll ---- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.05 + 's';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
