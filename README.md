@@ -1,7 +1,9 @@
-<h1>Hi, I'm Dishant! <br/><a>Geospatial Data Scientist</a></h1>
+<h1>Hi, I'm Dishant! <br/><a>Geospatial Data Scientist & Engineer</a></h1>
 
 <h2>👨‍💻 Data Science & Analytics Projects:</h2>
 
+- <b>Deep Learning Model for Building Footprint Extraction, Indiana (PyTorch)</b>
+  - [Click for the open-source repository](https://github.com/indiana-gio/building-extraction)
 - <b>Live Wildfires, USA (Sandbox, TypeScript, REACT, Leaflet, NASA EONET Data)</b>
   - [Click for the WebMap](https://42lmjt.csb.app/)
 - <b>Improving Satellite Imagery Derived Snow Cover Classification Using Machine Learning (Python, ArcGIS Pro, Google Colab)</b>
